@@ -181,12 +181,16 @@ end
 #		:
 
 loginfo("---> launch_state_machine starting")
+if $evm.state_var_exist?(:sm_first_launch) 
+  loginfo("--> WARNING : state_var :sm_first_launch exist : Skipping launch...".red)
+else
+  loginfo("--> state_var :sm_first_launch does not exist : Launching...".cyan)
+  $evm.set_state_var(:sm_first_launch,"blob")
+  @message = $evm.current_message
+  @prov = $evm.root['miq_provision'] || $evm.root['vm'].miq_provision
 
-@message = $evm.current_message
-@prov = $evm.root['miq_provision'] || $evm.root['vm'].miq_provision
+  @state_machine_class = get_name(class_tagcat)
+  @state_machine_instance = get_name(instance_tagcat)
 
-@state_machine_class = get_name(class_tagcat)
-@state_machine_instance = get_name(instance_tagcat)
-
-run_state_machine(@state_machine_class, @state_machine_instance)
-
+  run_state_machine(@state_machine_class, @state_machine_instance)
+end

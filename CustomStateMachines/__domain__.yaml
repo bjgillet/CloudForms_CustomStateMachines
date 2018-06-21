@@ -6,8 +6,8 @@ object:
     name: CustomStateMachines
     description: 
     display_name: 
-    priority: 12
+    priority: 5
     enabled: true
-    tenant_id: 64000000000001
+    tenant_id: 1000000000001
     source: user
     top_level_namespace: 
